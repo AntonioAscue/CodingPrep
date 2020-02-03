@@ -9,19 +9,7 @@
 </head>
 
 <body>
-  <script>
-    const getData = async () => {
-      const response = await fetch('ZonAnn.Ts+dSST.csv');
-      const data = await response.text();
-      const table = data
-        .trim()
-        .split(/\n/) // split text data based on line breaks
-        .slice(1); // slice away element zero = first row
-      const yearMeanDiffTemp = table
-        .map(row => row.split(',').slice(0, 2)); //split data on commas and select 2 first elements
-      console.log('year', yearMeanDiffTemp);
-    }
-    getData();
+  <script src = 'script-file.js'>
   </script>
 </body>
 
