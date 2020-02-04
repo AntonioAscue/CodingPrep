@@ -8,17 +8,24 @@ const tile_url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 //for tiles with a specific style(s), zoom(z), and coordinates(x,y)
 const tiles = L.tileLayer(tile_url,{attribution});
 tiles.addTo(mymap);
-console.log(api_url);
 
-const issCoordinates = async () => {
+const myIcon = L.icon({
+  iconUrl: 'ISS.png',
+  iconSize: [30, 60],
+  iconAnchor: [25, 16],
+});
+const marker = L.marker([0, 0], {icon: myIcon}).addTo(mymap);
+
+const coordISS = async () => {
   const response = await fetch(api_url);
   const ISS_data = await response.json()
-  const lat = ISS_data.latitude;
-  const lon = ISS_data.longitude;
-  console.log(lat)
-  document.getElementById('lat').innerHTML = lat;
-  document.getElementById('lon').innerHTML = lon;
+  const {latitude, longitude} = ISS_data;
+  marker.setLatLng([latitude, longitude]) 
+  console.log(latitude);
+  console.log(longitude);
+  document.getElementById('lat').innerHTML = latitude;
+  document.getElementById('lon').innerHTML = longitude;
 }
  
-const intervalID = setInterval(issCoordinates, 3000)
+const intervalID = setInterval(coordISS, 3000)
 
