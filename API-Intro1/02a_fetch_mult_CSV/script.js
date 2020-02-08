@@ -1,62 +1,77 @@
-function canvas(){
-const ctx = document.getElementById('myChart').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'bar',
+async function chart() {
+  const data = await getData();
+  var ctx = document.getElementById('myChart').getContext('2d');
+  new Chart(ctx, {
+    type: 'line',
     data: {
-        labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-        datasets: [{
-            label: '# of Votes',
-            data: [12, 19, 3, 5, 2, 3],
-            backgroundColor: [
-                'rgba(255, 99, 132, 0.2)',    
-            ],
-            borderColor: [
-                'rgba(255, 99, 132, 1)',
-            ],
-            borderWidth: 1
-        }]
+      labels: data.years,
+      datasets: [{
+        label: 'Global Mean Temperature',
+        data: data.global,
+        backgroundColor: 'transparent',
+        borderColor: 'rgba(255, 99, 132, 1)',
+        borderWidth: 1
+      },
+      {
+        label: 'Northern Hemisphere',
+        data: data.northern,
+        backgroundColor: 'transparent',
+        borderColor: 'blue',
+        borderWidth: 1
+      },
+      {
+        label: 'Southern Hemisphere',
+        data: data.southern,
+        backgroundColor: 'transparent',
+        borderColor: 'green',
+        borderWidth: 1
+      }
+      ]
     },
     options: {
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
-        }
+      scales: {
+        yAxes: [{
+          ticks: {
+            beginAtZero: false,
+            min: 13.2,
+            max: 15.6,
+            stepSize: 0.2,
+            fontSize: 11,
+            callback: function(value) {
+              return value + '°C';
+            }
+          }
+        }]
+      }
     }
-});
+  });
 }
 
 async function getData() {
-  //variables to store data
-  const year = [];
-  const globTemp = [];
+  const years = [];
+  const globalTemp = [];
   const NHTemp = [];
   const SHTemp = [];
-  //fetch data
+
   const response = await fetch('./data/ZonAnn.Ts+dSST.csv');
   const table = await response.text();
-  // parse data 
   table
     .trim()
     .split(/\n/)
     .slice(1)
     .map(row => {
-      const parseData = row.split(',');
-      year.push(parseData[0]);
-      globTemp.push(parseData[1]);
-      NHTemp.push(parseData[2]);
-      SHTemp.push(parseData[3]);
+      const dataPoints = row.split(',');
+      years.push(dataPoints[0]);
+      globalTemp.push(parseFloat(dataPoints[1] + 14) + 14);
+      NHTemp.push(parseFloat(dataPoints[2]) + 14);
+      SHTemp.push(parseFloat(dataPoints[3]) + 14);
     })
-    return {
-      'year': year,
-      'global': globTemp,
-      'nothern': NHTemp,
-      'southern': SHTemp
-    }
+  return {
+   'years': years,
+   'global': globalTemp,
+   'northern': NHTemp,
+   'southern': SHTemp
+  }
 }
-getData()
-  .then(data =>{
-    console.log(data);
-  })
+
+chart();
