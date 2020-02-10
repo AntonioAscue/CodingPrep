@@ -8,17 +8,21 @@ async function chartIt() {
     data: {
       labels: tempData.years,
       datasets: [{
-        label: 'Combined Land-Surface Air and Sea-Surface Water Temperature Anomalies C°',
+        label: 'Global T(°C)',
         data: tempData.temp,
-        backgroundColor: 'rgba(255, 99, 132, 0.2)',
-        pointBackgroundColor: 'rgba(255, 99, 132, 0.2)',
-        borderColor: '#F08080',
-        borderWidth: 0-5,
+        backgroundColor: '#8B0000',
+        borderColor: 'transparent',
         fill: false,
-        pointBorderWidth: 1,
-        pointHoverBorderColor: '#FF0000',
+        pointHoverBorderColor: '#FF4500',
         pointHoverBorderWidth: 3.8,
-        pointHoverRadius: 1.5,
+        pointHoverRadius: 1.2,
+      },
+      {
+        label: 'Temperature Model',
+        data: tempData.modelTempr,
+        backgroundColor: 'transparent',
+        borderColor: '#FF0000',
+        pointBorderColor: 'transparent'
       }]
     },
     options: {
@@ -27,19 +31,43 @@ async function chartIt() {
           ticks: {
             suggestedMin: 13.4,
             suggestedMax: 15.2,
+            drawTicks: true,
             beginAtZero: false,
-            callback: function(value, index, values) {
+            callback: function (value, index, values) {
               return value + '°';
-          }
+            }
+          },
+            scaleLabel: {
+              display: true,
+              fontStyle: 'bold',
+              fontColor: 'black',
+              fontSize: 13,
+              labelString: 'Temperature °C',
+            }
+        }],
+        xAxes: [{
+          ticks: {
+            beginAtZero: true,
+            suggestedMin: 1860,
+            suggestedMax: 2040
+          },
+          scaleLabel: {
+            display: true,
+            fontStyle: 'bold',
+            fontColor: 'black',
+            fontSize: 13,
+            labelString: 'Year'
           }
         }]
-      }
+      },
     }
   });
 }
+
 async function getData() {
   const xlabels = [];
   const ytemps = [];
+  const yPolyFit = []
   const response = await fetch('ZonAnn.Ts+dSST.csv');
   const data = await response.text();
   data
@@ -47,13 +75,21 @@ async function getData() {
     .split(/\n/) // splits text data based on line breaks
     .slice(1) // removes first element containing string labels === first row
     .forEach(row => {
-      const yearTemp = row.split(','); //comma-separated values
-      xlabels.push(yearTemp[0]);
-      ytemps.push(parseFloat(yearTemp[1]) + 14);
+      const rowData = row.split(',');
+      const year = rowData[0];
+      const tempr = +rowData[1] + 14;
+      xlabels.push(year);
+      ytemps.push(parseFloat(tempr));
+      yPolyFit.push(tempr_Model(year))
     });
 
   return {
     'years': xlabels,
-    'temp': ytemps
+    'temp': ytemps,
+    'modelTempr': yPolyFit
   }
+}
+
+function tempr_Model(x) {
+  return 4.291978 * x - 2.287448e-03 * x ** 2 + 4.063452e-07 * x ** 3 - 2.670433e+03;
 }
