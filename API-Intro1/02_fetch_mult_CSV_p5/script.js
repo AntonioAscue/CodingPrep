@@ -1,75 +1,48 @@
-async function chart() {
-  const data = await getData();
-  var ctx = document.getElementById('myChart').getContext('2d');
-  new Chart(ctx, {
-    type: 'line',
-    data: {
-      labels: data.years,
-      datasets: [{
-        label: 'Global',
-        data: data.globalTemp,
-        backgroundColor: 'transparent',
-        borderColor: 'rgba(255, 99, 132, 1)',
-        borderWidth: 1,
-        pointRadius: 2
-      },
-      {
-        label: 'Northern Hemisphere',
-        data: data.northernTemp,
-        backgroundColor: 'transparent',
-        borderColor: 'blue',
-        borderWidth: 1,
-        pointRadius: 2
-      },
-      {
-        label: 'Southern Hemisphere',
-        data: data.southernTemp,
-        backgroundColor: 'transparent',
-        borderColor: 'green',
-        borderWidth: 1,
-        pointRadius: 2
-      }]
-    },
-    options: {
-      scales: {
-        yAxes: [{
-          ticks: {
-            beginAtZero: false,
-            min: 13.2,
-            max: 15.6,
-            stepSize: 0.2,
-            fontSize: 10,
-            callback: function (value) {
-              return value + '°C';
-            }
-          }
-        }]
-      }
-    }
-  });
+async function getData() {
+  const response = await fetch('./data/ZonAnn.Ts+dSST.csv');
+  const table = await response.text();
+  return parseData(table)
 }
 
-async function getData() {
+async function setup() {
+  const data = await getData();
+  const rows = data.years.length;
+
+  createCanvas(800, 400);
+  background(0);
+  noFill();
+  drawGraph(rows, data.globalTemp, 'red');
+  drawGraph(rows, data.northernTemp, 'cyan');
+  drawGraph(rows, data.southernTemp, 'orange');
+}
+
+function drawGraph(rows, temp, color) {
+  beginShape();
+  stroke(color)
+  for (i = 0; i < rows; i++) {
+    let x = map(i, 0, rows - 1, 0, width);
+    let y = map(temp[i], 13.4, 15.4, height, 0);
+    vertex(x, y);
+  }
+  endShape();
+}
+
+function parseData(data){
   const years = [];
   const globalTemp = [];
   const northernTemp = [];
   const southernTemp = [];
-
-  const response = await fetch('./data/ZonAnn.Ts+dSST.csv');
-  const table = await response.text();
-  table
+  
+  data
     .trim()
     .split(/\n/)
     .slice(1)
     .map(row => {
-      const dataPoints = row.split(',');
-      years.push(dataPoints[0]);
-      globalTemp.push(parseFloat(dataPoints[1]) + 14);
-      northernTemp.push(parseFloat(dataPoints[2]) + 14);
-      southernTemp.push(parseFloat(dataPoints[3]) + 14);
+      const rows = row.split(',');
+      years.push(rows[0]);
+      globalTemp.push(+rows[1] + 14);
+      northernTemp.push(+rows[2] + 14);
+      southernTemp.push(+rows[3] + 14);
     })
-    console.table(years, globalTemp)
   return { years, globalTemp, northernTemp, southernTemp };
 }
-
-chart();
