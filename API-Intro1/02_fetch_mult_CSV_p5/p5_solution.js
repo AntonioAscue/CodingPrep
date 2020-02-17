@@ -13,8 +13,8 @@ function setup() {
   for (var i = 0; i < totalRows; i++) {
     let row = table.getRow(i);
     let temp = 14 + row.getNum('Glob');
-    let x = map(i, 0, totalRows - 1, 0, width);
-    let y = map(temp, 13.4, 15.2, height,0, false);
+    let x = map(i, 0, totalRows - 1, 0, 400);
+    let y = map(temp, 13.4, 15.2, 600,0);
     vertex(x, y);
   }
   endShape();

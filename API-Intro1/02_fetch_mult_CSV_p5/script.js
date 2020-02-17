@@ -31,28 +31,28 @@ function drawGraph(totalRows, temp, color) {
 function graphGrid(totalRows) {
   stroke('gray');
   strokeWeight(0.4);
-  xGrid(totalRows);
   yGrid(totalRows);
+  xGrid(totalRows);
 }
 
-function xGrid (xAxisPoints) {
+function xGrid(xAxisPoints) {
+  xValues = []
   for (i = 0; i < xAxisPoints; i++) {
     if (i % 5 === 0) {
-      const graphYear = map(i, 0, xAxisPoints - 1, 0, width);
-      line(graphYear, height, graphYear, 0)
-    }
+      const x = map(i, 0, xAxisPoints - 1, 0, width);
+      xValues.push(x);
+      line(x, height, x, 0)
+    }   
   }
 }
 
 function yGrid(){
-  const yMax = map(15.2, 13.4, 15.2, height,0);
-  const yMin = map(13.4, 13.4, 15.2, height,0);
-  const lineNum = 10;
-  const yGridStep = (yMax - yMin) / lineNum;
-   for(i = 0; i < lineNum; i++){
-    yLine = yMin + i*yGridStep;
-    line(0, yLine ,width, yLine)
-  } 
+  const numberOfLines = 10;
+  const yGridStep = 400 / numberOfLines;
+  for (i = 0; i < numberOfLines; i++) {
+    yLine = i * yGridStep;
+    line(0, yLine, width, yLine)
+  }
 }
 
 function parseData(data) {
