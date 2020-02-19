@@ -1,0 +1,17 @@
+{
+  "name": "exercise01_multipages",
+  "version": "1.0.0",
+  "description": "exercise 01",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "multipages"
+  ],
+  "author": "Antonio Ascue",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
