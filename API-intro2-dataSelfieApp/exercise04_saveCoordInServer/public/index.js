@@ -3,7 +3,7 @@ if ("geolocation" in navigator) {
     const button = document.getElementById('btn');
     button.addEventListener('click', () => {
 
-    const ts = position.timestamp;
+    const ts = Date.now();
     const lat = position.coords.latitude.toFixed(2);
     const lon = position.coords.longitude.toFixed(2);
    
