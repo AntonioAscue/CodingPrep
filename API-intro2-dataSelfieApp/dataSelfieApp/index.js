@@ -7,7 +7,7 @@ app.listen(3000, () => {
 app.use(express.static('public')); //express host static file
 app.use(express.json()); // support json encoded bodies
 
-const database =  new Datastore('database.db');
+const database = new Datastore('database.db');
 database.loadDatabase();
 
 app.post('/api', (req, res) => {
@@ -16,5 +16,15 @@ app.post('/api', (req, res) => {
   const timestamp = Date.now();
   data.timestamp = timestamp;
   database.insert(data);
-  res.json({status: "Success", ...data });
+  res.json({ status: "Success", ...data });
 });
+
+app.get('/api', (req, res) => {
+  database.find({}, (err, data) => { 
+    if(err){
+      res.end();
+      return;
+    }
+    res.json(data);
+   });
+})
