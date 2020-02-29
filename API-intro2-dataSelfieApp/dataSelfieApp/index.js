@@ -12,7 +12,6 @@ database.loadDatabase();
 
 app.post('/api', (req, res) => {
   const data = req.body;
-  console.log(data);
   const timestamp = Date.now();
   data.timestamp = timestamp;
   database.insert(data);
