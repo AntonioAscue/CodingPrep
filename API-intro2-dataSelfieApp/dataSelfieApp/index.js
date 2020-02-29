@@ -12,13 +12,9 @@ database.loadDatabase();
 
 app.post('/api', (req, res) => {
   const data = req.body;
+  console.log(data);
   const timestamp = Date.now();
   data.timestamp = timestamp;
   database.insert(data);
-  res.json({
-    status: 'Success!',
-    timestamp: timestamp,
-    latitude: data.lat,
-    longitude: data.lon
-  });
+  res.json({status: "Success", ...data });
 });
