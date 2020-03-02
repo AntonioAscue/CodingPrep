@@ -1,13 +1,16 @@
 function setup() {
   noCanvas();
   const video =  createCapture(VIDEO);
-  video.size(320,240)
-
+  video.size(320,240);
   let lat, lon;
   const button = document.getElementById('btn');
+  
   button.addEventListener('click', () => {
-    const submitData = document.getElementById('submit').value;
-    const data = { lat, lon, mood: submitData };
+    const mood = document.getElementById('submit').value;
+    video.loadPixels(); // alert p5 you want to load the video pixel data
+    const image64 = video.canvas.toDataURL();
+    const data = { lat, lon, mood, image64 };
+    console.log(data);
     const options = {
       method: 'POST',
       headers: {
@@ -31,8 +34,6 @@ function setup() {
     });
   } else {
     console.log("geolocation doesn/'t work");
-    
   }
-
 }
 

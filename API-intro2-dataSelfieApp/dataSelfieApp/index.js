@@ -5,7 +5,7 @@ app.listen(3000, () => {
   console.log('listening at 3000 -port');
 });
 app.use(express.static('public')); //express host static file
-app.use(express.json()); // support json encoded bodies
+app.use(express.json({limit: '50mb'})); // support json encoded bodies
 
 const database = new Datastore('database.db');
 database.loadDatabase();
