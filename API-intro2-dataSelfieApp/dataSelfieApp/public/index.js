@@ -10,7 +10,6 @@ function setup() {
     video.loadPixels(); // alert p5 you want to load the video pixel data
     const image64 = video.canvas.toDataURL();
     const data = { lat, lon, mood, image64 };
-    console.log(data);
     const options = {
       method: 'POST',
       headers: {
