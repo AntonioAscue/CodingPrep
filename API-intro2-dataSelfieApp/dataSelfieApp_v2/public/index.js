@@ -8,10 +8,11 @@ if ("geolocation" in navigator) {
     sendData(data)
     .then(res => res.text())
     .then(text => console.log('received the promise',text));
-  })
+  });
 } else {
   console.log('Geolocation API is not available');
 }
+
 function sendData(data) {
   const options = {
     method: "POST",
