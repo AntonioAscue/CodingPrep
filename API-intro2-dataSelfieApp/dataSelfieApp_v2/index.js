@@ -6,6 +6,7 @@ app.use(express.json());
 app.listen(port, ()=> console.log(`Listening to port ${port}.`));
 app.use(express.static('public'));
 
-app.post('/api', (request,res) => {
-  console.log(request);
+app.post('/api', (req,res) => {
+  const data=req.body
+  res.send({status:"200",...data})
 });
