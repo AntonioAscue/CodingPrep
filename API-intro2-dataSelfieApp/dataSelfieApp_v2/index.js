@@ -11,7 +11,8 @@ const db = new Datastore('public/database/datastore');
 db.loadDatabase();
 
 app.post('/api', (req,res) => {
-  const data=req.body.json();
+  const data=req.body.json;
+  console.log('api', data);
   db.insert(data);
   res.send({status:"200",...data})
 });
