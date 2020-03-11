@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    .hidden{
-      display: none;
-    }
-  </style>
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
   <title>Document</title>
 </head>
+
 <body>
-  <header>
+  <header id="main-header">
     <div class="container">
       <h1>Data Selfie App</h1>
     </div>
   </header>
-  <navbar id="navbar">
+  <nav id="navbar">
     <div class="container">
       <ul>
         <li><a href="#">Home</a></li>
@@ -25,20 +23,23 @@
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
-  </navbar>
- <div class="container">
-   <button id="btnGeo">Get your coordinates</button>
-   <p>
-     latitude: 
-     <span id="latitude"></span>&deg;</br>
-     longitude: 
-    <span id="longitude"></span>&deg;
-   </p>
-   <input type="text" placeholder="Insert item" id="item"><br>
-   <input type="button" value="Submit Data" id="submit">
-   <span class="hidden">Sorry, no data was found to send</span>
-   <p id="response"></p>
- </div>
+  </nav>
+  <div class="container">
+    <div id="main">
+      <button id="btnGeo">Get your coordinates</button>
+      <p>
+        latitude:
+        <span id="latitude"></span>&deg;</br>
+        longitude:
+        <span id="longitude"></span>&deg;
+      </p>
+      <input type="text" placeholder="Insert item" id="item"><br>
+      <input type="button" value="Submit Data" id="submit">
+      <span class="hidden">Sorry, no data was found to send</span>
+      <p id="response"></p>
+    </div>
+  </div>
   <script src="index.js"></script>
 </body>
+
 </html>

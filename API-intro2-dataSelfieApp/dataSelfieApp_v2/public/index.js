@@ -17,18 +17,19 @@ if ("geolocation" in navigator) {
 
 submitBtn.addEventListener('click', () => {
   const item = document.getElementById("item").value;
-  const timestamp = new Date(0);
+
+  const timestamp = Date.now();
   let data = {timestamp};
   
   if (coordinates === undefined && item === "") {
     errMes.classList.remove('hidden');
-    data = {...data, message:"No data was submitted"}
+    data = {message:"No data was submitted", ...data}
   } else if (coordinates === undefined) {
-    data = {...data, item};
+    data = { item, ...data};
   } else if (item === "") {
-    data = {...data, ...coordinates};
+    data = {...coordinates, ...data};
   } else {
-    data = {...data, ...coordinates, item};
+    data = {...coordinates, item, ...data};
   }
   sendData(data)
       .then(res => res.text())
