@@ -6,18 +6,39 @@ async function getData() {
 
 getData()
   .then(data => uploadDb(data))
-  .then(final => console.log(final))
+  .catch(err => console.log(err));
 
 function uploadDb(dbData) {
-  const div = document.getElementById("dbTable");
+  const table = document.getElementById("dbTable");
   dbData.forEach(dbObj => {
-    const dbPro = document.createElement("div");
-    Object.keys(dbObj).forEach(key => {
-      const p = document.createElement("p");
-      console.log(dbObj[key]);
-      p.innerHTML = `${key} : ${dbObj[key]}`;
-      dbPro.append(p);
-    })
-    div.append(dbPro);
-  })
+    const tableRow = document.createElement("tr");
+    let latPlaceholder;
+    for (let [key, value] of Object.entries(dbObj)) {
+      const cell = document.createElement("td");
+      if (key === "timestamp") {
+        const timeStamp = new Date(value).toString().replace('(Central European Standard Time)','');
+        cell.innerHTML = `${timeStamp}`;
+      } else if(key === "latitude"){
+        latPlaceholder = value;
+      } else if(key === "longitude"){
+        cell.innerHTML = `[${latPlaceholder}, ${value}])`;
+      }
+      else {
+        cell.innerHTML = `${value}`;
+      } 
+      if(cell.innerHTML !== ""){
+        tableRow.append(cell);
+      }
+    }
+    addDeleteButton(table, tableRow)
+  });
+}
+
+function addDeleteButton(table, row){
+  const tdBtn = document.createElement('td');
+  const delButton = document.createElement("button");
+  delButton.innerHTML= "Delete";
+  tdBtn.append(delButton);
+  row.append(tdBtn);
+  return table.append(row);
 }

@@ -4,6 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="./css/style.css">
   <title>Document</title>
 </head>
 
@@ -13,7 +14,7 @@
       <h1>Data Selfie App</h1>
     </div>
   </header>
-  <navbar id="navbar">
+  <nav id="navbar">
     <div class="container">
       <ul>
         <li><a href="index.html">Home</a></li>
@@ -22,11 +23,18 @@
         <li><a href="#">Contact</a></li>
       </ul>
     </div>
-  </navbar>
+  </nav>
   <div class="container">
-    <div id="dbTable">
- 
-  </div>
+    <table id="dbTable">
+      <tr>
+        <th>Coordinates</br>
+          <span style="font-weight: normal">(latitude, longitude)</span></th>
+        <th>Item</th>
+        <th>Timestamp</th>
+        <th>ID</th>
+        <th>Edit</th>
+      </tr>
+    </table>
   <script src="/all.js"></script>
 </body>
 
