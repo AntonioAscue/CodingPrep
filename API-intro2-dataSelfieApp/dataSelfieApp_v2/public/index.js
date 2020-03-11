@@ -17,8 +17,8 @@ if ("geolocation" in navigator) {
 
 submitBtn.addEventListener('click', () => {
   const item = document.getElementById("item").value;
-  const ts = Date.now();
-  let data = {ts};
+  const timestamp = new Date(0);
+  let data = {timestamp};
   
   if (coordinates === undefined && item === "") {
     errMes.classList.remove('hidden');
@@ -36,15 +36,15 @@ submitBtn.addEventListener('click', () => {
 })
 
 function coord(position) {
-  const lat = position.coords.latitude.toFixed(2);
-  const lon = position.coords.longitude.toFixed(2);
-  latHTML.innerText = lat;
-  lonHTML.innerText = lon;
-  return { lat, lon };
+  const latitude = position.coords.latitude.toFixed(2);
+  const longitude = position.coords.longitude.toFixed(2);
+  latHTML.innerText = latitude;
+  lonHTML.innerText = longitude;
+  return { latitude, longitude };
 }
 
 function sendData(data) {
-  console.log('sendData', data);
+  console.log(data);
   const options = {
     method: "POST",
     headers: {

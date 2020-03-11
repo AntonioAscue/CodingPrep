@@ -11,8 +11,13 @@ const db = new Datastore('public/database/datastore');
 db.loadDatabase();
 
 app.post('/api', (req,res) => {
-  const data=req.body.json;
-  console.log('api', data);
+  const data=req.body;
   db.insert(data);
   res.send({status:"200",...data})
+});
+
+app.get('/api', (req,res) => {
+  db.find({}, (err, data) => {
+    res.send(data);
+  });
 });
