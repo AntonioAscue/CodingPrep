@@ -1,0 +1,19 @@
+{
+  "name": "dataselfieapp_repeat",
+  "version": "1.0.0",
+  "description": "repetion of dataselfie app",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "routing",
+    "client-side",
+    "server-side"
+  ],
+  "author": "Antonio Ascue",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
