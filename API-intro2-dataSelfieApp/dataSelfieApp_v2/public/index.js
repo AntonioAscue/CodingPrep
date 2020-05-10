@@ -56,3 +56,4 @@ function sendData(data) {
   }
   return fetch('/api', options)
 }
+

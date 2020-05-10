@@ -3,10 +3,11 @@ async function getData() {
   const data = await res.json();
 
   data.forEach(item => {
-    const rootDiv = document.createElement('ul');
-    const geoLocation = document.createElement('li');
-    const mood = document.createElement('li');
-    const ts = document.createElement('li');
+    const rootDiv = document.createElement('div');
+    rootDiv.className = 'dbDiv';
+    const geoLocation = document.createElement('p');
+    const mood = document.createElement('p');
+    const ts = document.createElement('p');
     const videoImage = document.createElement('img')
     const dateString = new Date(item.timestamp).toLocaleString();
     
